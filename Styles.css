@@ -1,0 +1,221 @@
+/* ========= ARDARA Brand Tokens ========= */
+:root{
+  /* ألوان الهوية من القالب */
+  --brand:#00645A;      /* Teal داكن */
+  --brand-2:#D2A771;    /* Gold */
+  --accent:#D2A771;
+
+  --bg:#0F1417; --text:#F6F7FB; --muted:#B9C2CC;
+  --border:rgba(255,255,255,.14);
+  --shadow:0 18px 40px rgba(0,0,0,.35);
+  --radius:20px;
+
+  /* خلفية الصورة */
+  --bg-tint: rgba(0,100,90,.10);
+  --bg-dark: rgba(0,0,0,.60);
+
+  /* أزرار Pill */
+  --pill-border:2px;
+  --pill-color:rgba(255,255,255,.70);
+  --pill-bg:rgba(255,255,255,.04);
+  --pill-bg-hover:rgba(255,255,255,.07);
+}
+
+/* ========= Base ========= */
+*{box-sizing:border-box}
+html,body{height:100%}
+
+body{
+  margin:0; color:var(--text);
+  font-family:"Tajawal", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+
+  /* خلفية الصورة + تغميق وتلوين */
+  background:
+    radial-gradient(900px 520px at 85% -10%, var(--bg-tint), transparent),
+    linear-gradient(180deg, var(--bg-tint), var(--bg-dark) 45%),
+    url("assets/background.png") center/cover no-repeat;
+  background-color:var(--bg);
+
+  display:flex; align-items:center; justify-content:center;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  position: relative; z-index:0;
+}
+
+/* شعار watermark أعلى يمين (غامق وصغير للزاوية) */
+/* شعار أعلى اليمين – أوضح قليلاً */
+body::before{
+  content:"";
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 14px);
+  right: calc(env(safe-area-inset-right) + 14px);
+  width: clamp(48px, 9vw, 96px);
+  height: clamp(48px, 9vw, 96px);
+  background: url("assets/logo.png") center/contain no-repeat;
+  /* أوضح: خفّضنا التعتيم السابق ورفعنا السطوع */
+  opacity: .55;                        /* كانت ~.18 */
+  filter: brightness(.85) contrast(1.2) saturate(1.0) drop-shadow(0 2px 6px rgba(0,0,0,.25));
+  pointer-events: none;
+  z-index: 2;
+}
+
+
+.wrap{ width:100%; max-width:560px; }
+
+
+
+.card--gradA{
+  position:relative;
+  background: rgba(10,14,16,.78);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius: var(--radius);
+  padding:22px;
+  backdrop-filter: blur(10px) saturate(112%);
+  -webkit-backdrop-filter: blur(10px) saturate(112%);
+  box-shadow: 0 18px 40px rgba(0,0,0,.34);
+}
+.card--gradA::before{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--brand) 26%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 22%, transparent) 100%
+  );
+  opacity: 1;
+}
+.card--gradA::after{
+  /* لمعة داخلية خفيفة لا تزيد التشتت */
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+.card--gradA > *{ position:relative; z-index:1 }
+
+
+/* شعار متوسّط داخل الكارد */
+.logo-center{
+  display:block;
+  margin: 0 auto 10px;
+  width: clamp(72px, 22vw, 120px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.25));
+}
+
+/* لو عندك ووترمارك زاوية يمين وتبين تشيل التكرار */
+body::before{ display:none; } /* أو خففيه بدل إخفائه */
+
+
+
+
+س
+/* Divider */
+.divider{
+  height:1px; margin:10px 0 12px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
+}
+
+/* ========= Header ========= */
+.brand{ display:flex; justify-content:center; text-align:center; margin-bottom:6px; }
+.titles{ width:100%; text-align:center; }
+.titles h1{ font-size:22px; line-height:1.25; margin:0 0 6px; letter-spacing:.2px; }
+.titles .lead{ font-size:14px; margin:0 0 10px; color:var(--muted); }
+
+/* ========= Buttons (Pill) ========= */
+.links{ display:flex; flex-direction:column; gap:14px; margin-top:12px; }
+.btn{
+  display:flex; align-items:center; justify-content:center;
+  width:100%; min-height:52px; padding:12px 18px;
+  border-radius:9999px;
+  background: var(--pill-bg);
+  border: var(--pill-border) solid var(--pill-color);
+  color: var(--text); font-weight:600; letter-spacing:.2px; text-decoration:none;
+  transition: transform .06s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.btn:hover{
+  background: var(--pill-bg-hover);
+  border-color: rgba(255,255,255,.85);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--brand) 22%, transparent);
+}
+.btn:active{ transform: translateY(0) }
+.btn:focus-visible{
+  outline:none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+  border-color:#fff;
+}
+
+/* ========= Footer ========= */
+.sub{ margin-top:16px; font-size:.8rem; color:var(--muted); text-align:center; }
+
+/* تهيئة للحركة المخففة */
+@media (prefers-reduced-motion: reduce){
+  .btn, .card{ transition:none; animation:none }
+}
+
+/* 1) هالة خفيفة خلف الشعار + حجم متجاوب (لو استخدمتي hero-logo) */
+.hero-logo{ position:relative; display:flex; justify-content:center; margin-bottom: clamp(12px, 3vh, 20px); }
+.hero-logo::after{
+  content:""; position:absolute; inset:auto; top:50%; transform:translateY(-50%);
+  width: clamp(120px, 34vw, 220px); height: clamp(120px, 34vw, 220px);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(0,0,0,.28), rgba(0,0,0,.12) 60%, transparent 70%);
+  filter: blur(2px);
+  pointer-events:none; z-index:0;
+}
+.hero-logo img{ position:relative; z-index:1; width: clamp(88px, 22vw, 140px); height:auto; }
+
+/* 2) تغميق بسيط للكارد + تقليل الظل */
+.card{
+  background: rgba(10,14,16,.82);       /* أغمق سنّة */
+  box-shadow: 0 16px 36px rgba(0,0,0,.30); /* ظل أهدى */
+  margin-top: clamp(6px, 1.8vh, 14px);  /* مسافة تحت الشعار */
+}
+
+/* 3) أزرار Pill أخف */
+:root{
+  --pill-border: 1.5px;                           /* كان 2px */
+  --pill-color: rgba(255,255,255,.62);            /* حد أهدى */
+  --pill-bg: rgba(255,255,255,.045);              /* خلفية خفيفة */
+  --pill-bg-hover: rgba(255,255,255,.07);
+}
+.btn{
+  min-height: 52px;
+  padding: 12px 18px;
+}
+.btn:hover{
+  border-color: rgba(255,255,255,.80);
+  transform: translateY(-1px);
+}
+
+/* 4) عنوان متجاوب */
+.titles h1{
+  font-size: clamp(20px, 2.4vw, 26px); /* على الجوال يصغر شوي */
+  line-height: 1.25;
+  letter-spacing: .2px;
+  margin: 0 0 8px;
+}
+
+/* 5) Divider أدق (اختياري) */
+.divider{
+  height: 1px;
+  margin: 10px 0 14px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
+  border-radius: 999px;
+}
+
+/* 6) تحسين تباين النص الصغير */
+.sub{ color: color-mix(in srgb, var(--muted) 92%, #fff 8%); }
+
+/* 7) احترام الشاشات الصغيرة جدًا */
+@media (max-width: 380px){
+  .btn{ font-size: .95rem; padding: 11px 14px; }
+}
+
+
+
+/* مسافة تحت الشعار */
+.hero-logo{ margin-bottom: clamp(24px, 6vh, 64px); }
+
+/* أو مسافة فوق الكارد */
+.card{ margin-top: clamp(24px, 6vh, 64px); }
+
+
